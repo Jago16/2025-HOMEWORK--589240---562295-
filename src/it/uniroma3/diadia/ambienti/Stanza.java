@@ -113,6 +113,10 @@ public class Stanza {
 	public Attrezzo[] getAttrezzi() {
 		return this.attrezzi;
 	}
+	
+	public int getNumeroAttrezzi() {
+		return this.numeroAttrezzi;
+	}
 
 	/**
 	 * Mette un attrezzo nella stanza.

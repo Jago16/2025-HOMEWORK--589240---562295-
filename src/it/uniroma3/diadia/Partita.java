@@ -21,16 +21,24 @@ public class Partita {
 
 	public Partita() {
 		this.labirinto = new Labirinto();
-		this.finita = false;
 		this.giocatore = new Giocatore();
+		this.finita = false;
 	}
 
 	/**
 	 * Crea tutte le stanze e le porte di collegamento
 	 */
-
+	public Giocatore getGiocatore() {
+		return this.giocatore;
+	}
 	public Labirinto getLabirinto() {
 		return this.labirinto;
+	}
+	public void setGiocatore(Giocatore giocatore) {
+		this.giocatore = giocatore;
+	}
+	public void setLabirinto(Labirinto labirinto) {
+		this.labirinto = labirinto;
 	}
 
 	/**
@@ -57,10 +65,6 @@ public class Partita {
 	 */
 	public void setFinita() {
 		this.finita = true;
-	}
-
-	public Giocatore getGiocatore() {
-		return this.giocatore;
 	}
 
 	public String toString() {

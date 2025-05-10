@@ -15,19 +15,19 @@ public class ComandoVai implements Comando{
         Stanza prossimaStanza = null;
 
         if (direzione == null) {
-            System.out.println("Dove vuoi andare?");
-            System.out.println("Devi specificare una direzione");
+        	partita.getConsole().mostraMessaggio("Dove vuoi andare?");
+        	partita.getConsole().mostraMessaggio("Devi specificare una direzione");
             return;
         }
 
         prossimaStanza = stanzaCorrente.getStanzaAdiacente(this.direzione);
         if (prossimaStanza == null) {
-            System.out.println("Direzione inesistente");
+        	partita.getConsole().mostraMessaggio("Direzione inesistente");
             return;
         }
 
         partita.getLabirinto().setStanzaCorrente(prossimaStanza);
-        System.out.println(partita.getLabirinto().getStanzaCorrente().getNome());
+        partita.getConsole().mostraMessaggio(partita.getLabirinto().getStanzaCorrente().getNome());
         partita.getGiocatore().setCfu(partita.getGiocatore().getCfu() - 1);
     }
 

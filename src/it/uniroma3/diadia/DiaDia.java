@@ -26,15 +26,18 @@ public class DiaDia {
 			+ "o regalarli se pensi che possano ingraziarti qualcuno.\n\n"
 			+ "Per conoscere le istruzioni usa il comando 'aiuto'.";
 
-
 	private Partita partita;
 	private IO console;
 
 	public DiaDia(IO console) {
-		this.partita = new Partita();
+		this.partita = new Partita(console);
 		this.console = console;
 	}
 
+	public IO getConsole() {
+		return this.console;
+	}
+	
 	public void gioca() {
 		String istruzione;
 
@@ -51,16 +54,17 @@ public class DiaDia {
 	 * @return true se l'istruzione e' eseguita e il gioco continua, false
 	 *         altrimenti
 	 */
-
 	private boolean processaIstruzione(String istruzione) {
 		Comando comandoDaEseguire;
 		FabbricaDiComandi factory = new FabbricaDiComandiFisarmonica();
 				comandoDaEseguire = factory.costruisciComando(istruzione);
 		comandoDaEseguire.esegui(this.partita);
 		if (this.partita.vinta())
-			System.out.println("Hai vinto!");
-		if (!this.partita.isFinita())   //forse sostituisci con this.partita.isFinita()
-			System.out.println("Hai esaurito i CFU...");
+			console.mostraMessaggio("Hai vinto!");
+//		if (this.partita.isFinita())   
+		if(this.partita.getGiocatore().getCfu() == 0) {
+			console.mostraMessaggio("Hai esaurito i CFU...hai perso");
+		}
 		return this.partita.isFinita();
 	}
 

@@ -18,12 +18,14 @@ public class Partita {
 	private boolean finita;
 	private Labirinto labirinto;
 	private Giocatore giocatore;
-	private Stanza stanzaCorrente;
+	private IO console;
+	
 
-	public Partita() {
+	public Partita(IO console) {
 		this.labirinto = new Labirinto();
 		this.giocatore = new Giocatore();
 		this.finita = false;
+		this.console = console;
 	}
 
 	/**
@@ -35,6 +37,7 @@ public class Partita {
 	public Labirinto getLabirinto() {
 		return this.labirinto;
 	}
+	
 	public void setGiocatore(Giocatore giocatore) {
 		this.giocatore = giocatore;
 	}
@@ -70,5 +73,13 @@ public class Partita {
 
 	public String toString() {
 		return this.labirinto.getStanzaCorrente() + "hai " + this.giocatore.getCfu() + " cfu rimanenti";
+	}
+
+	public IO getConsole() {
+		return this.console;
+	}
+
+	public void setConsole(IO console) {
+		this.console = console;
 	}
 }

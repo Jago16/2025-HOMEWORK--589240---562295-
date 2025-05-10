@@ -18,38 +18,8 @@ public interface Comando{
 	
 	public void esegui(Partita partita);
 	public void setParametro(String parametro);
+
+//	public void getNome();
+//	public void getParametro();
 	
 }
-
-
-
-//public class Comando {
-//
-//	private String nome;
-//	private String parametro;
-//
-//    @SuppressWarnings("resource")
-//	public Comando(String istruzione) {
-//		Scanner scannerDiParole = new Scanner(istruzione);
-//
-//		// prima parola: nome del comando
-//		if (scannerDiParole.hasNext())
-//			this.nome = scannerDiParole.next();
-//
-//		// seconda parola: eventuale parametro
-//		if (scannerDiParole.hasNext())
-//			this.parametro = scannerDiParole.next();
-//	}
-//
-//	public String getNome() {
-//		return this.nome;
-//	}
-//
-//	public String getParametro() {
-//		return this.parametro;
-//	}
-//
-//	public boolean sconosciuto() {
-//		return (this.nome == null);
-//	}
-//}

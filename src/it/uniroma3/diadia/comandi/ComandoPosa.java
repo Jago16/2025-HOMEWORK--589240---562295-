@@ -1,13 +1,11 @@
 package it.uniroma3.diadia.comandi;
 
-import it.uniroma3.diadia.IOConsole;
 import it.uniroma3.diadia.Partita;
 import it.uniroma3.diadia.attrezzi.Attrezzo;
 
 public class ComandoPosa implements Comando{
 	
 	private String nomeAttrezzo;
-	IOConsole console = new IOConsole();
 	
 	public ComandoPosa(String attrezzo) {
 		this.nomeAttrezzo = attrezzo;
@@ -30,9 +28,9 @@ public class ComandoPosa implements Comando{
 			partita.getGiocatore().getBorsa().removeAttrezzo(nomeAttrezzo);
 		}
 		if (!trovato) {
-			this.console.mostraMessaggio("attrezzo non trovato");
+			partita.getConsole().mostraMessaggio("attrezzo non trovato");
 		} else {
-			this.console.mostraMessaggio("attrezzo " + nomeAttrezzo + " e' stato posato");
+			partita.getConsole().mostraMessaggio("attrezzo " + nomeAttrezzo + " e' stato posato");
 		}
 		
 	}

@@ -1,7 +1,5 @@
 package it.uniroma3.diadia;
 
-import it.uniroma3.diadia.ambienti.Stanza;
-import it.uniroma3.diadia.attrezzi.Attrezzo;
 import it.uniroma3.diadia.comandi.Comando;
 import it.uniroma3.diadia.comandi.FabbricaDiComandi;
 import it.uniroma3.diadia.comandi.FabbricaDiComandiFisarmonica;
@@ -14,7 +12,7 @@ import it.uniroma3.diadia.comandi.FabbricaDiComandiFisarmonica;
  *
  * @author docente di POO (da un'idea di Michael Kolling and David J. Barnes)
  * 
- * @version base
+ * @version 2.0
  */
 
 public class DiaDia {
@@ -30,9 +28,9 @@ public class DiaDia {
 
 
 	private Partita partita;
-	private IOConsole console;
+	private IO console;
 
-	public DiaDia(IOConsole console) {
+	public DiaDia(IO console) {
 		this.partita = new Partita();
 		this.console = console;
 	}
@@ -67,8 +65,8 @@ public class DiaDia {
 	}
 
 	public static void main(String[] argc) {
-		IOConsole console = new IOConsole();
-		DiaDia gioco = new DiaDia(console);
+		IO io = new IOConsole();
+		DiaDia gioco = new DiaDia(io);
 		gioco.gioca();
 	}
 }

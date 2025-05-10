@@ -18,6 +18,7 @@ public class Partita {
 	private boolean finita;
 	private Labirinto labirinto;
 	private Giocatore giocatore;
+	private Stanza stanzaCorrente;
 
 	public Partita() {
 		this.labirinto = new Labirinto();

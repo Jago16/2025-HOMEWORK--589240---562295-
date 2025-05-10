@@ -13,7 +13,7 @@ public class ComandoPrendi implements Comando{
 		}
 		@Override
 		public void setParametro(String parametro) {
-			
+			this.nomeAttrezzo = parametro;
 		}
 
 		@Override
@@ -38,10 +38,3 @@ public class ComandoPrendi implements Comando{
 		
 		
 }
-
-
-//private void prendi(String nomeAttrezzo) {
-//
-
-//
-//	}

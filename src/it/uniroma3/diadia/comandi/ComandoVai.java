@@ -4,35 +4,35 @@ import it.uniroma3.diadia.Partita;
 import it.uniroma3.diadia.ambienti.Stanza;
 
 public class ComandoVai implements Comando{
-	private String direzione;
+    private String direzione;
 
-	public ComandoVai(String direzione) {
-		this.direzione = direzione;
-	}
-	@Override
-	public void esegui(Partita partita) {
-		Stanza stanzaCorrente = partita.getLabirinto().getStanzaCorrente();
-		Stanza prossimaStanza = null;
+    public ComandoVai(String direzione) {
+        this.direzione = direzione;
+    }
+    @Override
+    public void esegui(Partita partita) {
+        Stanza stanzaCorrente = partita.getLabirinto().getStanzaCorrente();
+        Stanza prossimaStanza = null;
 
-		if (direzione == null) {
-			System.out.println("Dove vuoi andare?");
-			System.out.println("Devi specificare una direzione");
-			return;
-		}
+        if (direzione == null) {
+            System.out.println("Dove vuoi andare?");
+            System.out.println("Devi specificare una direzione");
+            return;
+        }
 
-		prossimaStanza = stanzaCorrente.getStanzaAdiacente(this.direzione);
-		if (prossimaStanza == null) {
-			System.out.println("Direzione inesistente");
-			return;
-		}
+        prossimaStanza = stanzaCorrente.getStanzaAdiacente(this.direzione);
+        if (prossimaStanza == null) {
+            System.out.println("Direzione inesistente");
+            return;
+        }
 
-		partita.getLabirinto().setStanzaCorrente(prossimaStanza);
-		System.out.println(partita.getLabirinto().getStanzaCorrente().getNome());
-		partita.getGiocatore().setCfu(partita.getGiocatore().getCfu() - 1);
-	}
-	
-	@Override
-	public void setParametro(String parametro) {
-		this.direzione = parametro;
-	}
+        partita.getLabirinto().setStanzaCorrente(prossimaStanza);
+        System.out.println(partita.getLabirinto().getStanzaCorrente().getNome());
+        partita.getGiocatore().setCfu(partita.getGiocatore().getCfu() - 1);
+    }
+
+    @Override
+    public void setParametro(String parametro) {
+        this.direzione = parametro;
+    }
 }

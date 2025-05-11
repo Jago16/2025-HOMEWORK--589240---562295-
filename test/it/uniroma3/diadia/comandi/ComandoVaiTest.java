@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
+import it.uniroma3.diadia.IO;
 import it.uniroma3.diadia.IOConsole;
 import it.uniroma3.diadia.Partita;
 import it.uniroma3.diadia.ambienti.Stanza;
@@ -12,14 +13,11 @@ import it.uniroma3.diadia.ambienti.Stanza;
 public class ComandoVaiTest {
 
     private Partita partita;
-    private IOConsole io;
+    private IO io = new IOConsole();
 
     @Before
     public void setUp() {
-        this.partita = new Partita();
-        this.io = new IOConsole();
-
-        //this.partita.setConsole(io);
+        this.partita = new Partita(io);
     }
 
     @Test

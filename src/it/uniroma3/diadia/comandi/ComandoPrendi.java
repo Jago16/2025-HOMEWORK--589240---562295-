@@ -9,6 +9,11 @@ public class ComandoPrendi implements Comando{
 		public ComandoPrendi(String attrezzo) {
 			this.nomeAttrezzo = attrezzo;
 		}
+		
+		public ComandoPrendi() {
+			this.nomeAttrezzo = null;
+		}
+		
 		@Override
 		public void setParametro(String parametro) {
 			this.nomeAttrezzo = parametro;
@@ -23,7 +28,7 @@ public class ComandoPrendi implements Comando{
 						partita.getConsole().mostraMessaggio(partita.getGiocatore().getBorsa().toString());
 						// rimuovi attrezzo dalla stanza
 						partita.getLabirinto().getStanzaCorrente().removeAttrezzo(daRimuovere);
-						partita.getGiocatore().getBorsa().addAttrezzo(daRimuovere);
+						if(partita.getGiocatore().getBorsa().addAttrezzo(daRimuovere)) System.out.println("attrezzo aggiunto");
 					}
 			
 					if (!trovato) {

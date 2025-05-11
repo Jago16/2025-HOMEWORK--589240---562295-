@@ -11,6 +11,10 @@ public class ComandoPosa implements Comando{
 		this.nomeAttrezzo = attrezzo;
 	}
 	
+	public ComandoPosa() {
+		this.nomeAttrezzo = null;
+	}
+	
 	@Override
 	public void setParametro(String parametro) {
 		this.nomeAttrezzo = parametro;

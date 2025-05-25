@@ -3,12 +3,24 @@ package it.uniroma3.diadia.ambienti;
 import it.uniroma3.diadia.attrezzi.Attrezzo;
 
 public class StanzaMagicaProtected extends Stanza{
+	
 	final static private int SOGLIA_MAGICA_DEFAULT = 3;
+	
 	private int contatoreAttrezziPosati;
 	private int sogliaMagica;
 
-	public StanzaMagicaProtected(String nome) {
-		this(nome, SOGLIA_MAGICA_DEFAULT);
+	public int getSogliaMagica() {
+		return sogliaMagica;
+	}
+
+	public void setSogliaMagica(int sogliaMagica) {
+		this.sogliaMagica = sogliaMagica;
+	}
+
+	public StanzaMagicaProtected (String nome) {
+		super(nome);
+		this.contatoreAttrezziPosati = 0;
+		this.sogliaMagica = SOGLIA_MAGICA_DEFAULT;
 	}
 
 	public StanzaMagicaProtected(String nome, int soglia) {
@@ -16,7 +28,26 @@ public class StanzaMagicaProtected extends Stanza{
 		this.contatoreAttrezziPosati = 0;
 		this.sogliaMagica = soglia;
 	}
-
+	@Override
+	public boolean addAttrezzo(Attrezzo attrezzo) {
+		boolean posato = false;
+		if(this.contatoreAttrezziPosati>=this.sogliaMagica) {
+			attrezzo = this.modificaAttrezzo(attrezzo);
+			posato = this.addAttrezzo(attrezzo);
+			if(posato == true) {
+				this.contatoreAttrezziPosati++;
+			}
+		}
+		else {
+			posato = this.addAttrezzo(attrezzo);
+			if(posato==true) {
+				this.contatoreAttrezziPosati++;
+			}
+		}
+		return posato;
+	}
+	
+	/*
 	@Override
 	public boolean addAttrezzo(Attrezzo attrezzo) {
 		this.contatoreAttrezziPosati++;
@@ -24,14 +55,14 @@ public class StanzaMagicaProtected extends Stanza{
 			attrezzo = this.modificaAttrezzo(attrezzo);
 		return this.addAttrezzo(attrezzo);
 	}
-
+	*/
+	
 	private Attrezzo modificaAttrezzo(Attrezzo attrezzo) {
 		StringBuilder nomeInvertito;
 		int pesoX2 = attrezzo.getPeso() * 2;
 		nomeInvertito = new StringBuilder(attrezzo.getNome());
 		nomeInvertito = nomeInvertito.reverse();
-		attrezzo = new Attrezzo(nomeInvertito.toString(),
-				pesoX2);
+		attrezzo = new Attrezzo(nomeInvertito.toString(), pesoX2);
 		return attrezzo;
 	}
 }

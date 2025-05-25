@@ -21,11 +21,10 @@ public class Partita {
 	private IO console;
 	
 
-	public Partita(IO console) {
+	public Partita() {
 		this.labirinto = new Labirinto();
 		this.giocatore = new Giocatore();
 		this.finita = false;
-		this.console = console;
 	}
 
 	/**

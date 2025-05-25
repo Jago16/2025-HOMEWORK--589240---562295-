@@ -1,45 +1,56 @@
-package it.uniroma3.diadia;
-
-import static org.junit.jupiter.api.Assertions.*;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
+package  it.uniroma3.diadia;
 import it.uniroma3.diadia.ambienti.Stanza;
 
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
 public class PartitaTest {
-
-	private Partita partita;
-	private Stanza vincente;
-
-	@BeforeEach
-	public void setUp() throws Exception {
-		this.partita = new Partita();
-		this.vincente = new Stanza("Biblioteca");
-	}
-
 	@Test
-	public void testNuovaPartitaNonFinita() {
-		assertFalse(this.partita.isFinita());
+	public void testNonVinta() {
+		Stanza s1 = new Stanza("N11");
+		Stanza s2 = new Stanza("N12");
+		assertFalse(partita(false, s1, s2,1).vinta());
 	}
-
+	public void testVinta() {
+		Stanza s1 = new Stanza("N11");
+		assertTrue(partita(true, s1, s1,1).vinta());
+	}
+	
 	@Test
-	public void testPartitaVinta() {
-		partita.getLabirinto().setStanzaCorrente(partita.getLabirinto().getStanzaVincente());
-		assertTrue(this.partita.vinta());
+	public void testPartitaFinita() {
+		Stanza s1 = new Stanza("N11");
+		Stanza s2 = new Stanza("N12");
+		assertTrue(partita(true, s1, s2,1).isFinita());
 	}
-
 	@Test
-	public void testPartitaPersa() {
-		partita.getGiocatore().setCfu(0);
-		assertFalse(this.partita.vinta());
+	public void testPartitaNonFinita() {
+		Stanza s1 = new Stanza("N11");
+		Stanza s2 = new Stanza("N12");
+		assertFalse(partita(false, s1, s2,1).isFinita());
 	}
-
 	@Test
-	public void testPartitaFinitaENonFinita() {
-		assertFalse(this.partita.isFinita());
-		this.partita.setFinita();
-		assertTrue(this.partita.isFinita());
+	public void testPartitaFinitaVintaNonFinita() {
+		Stanza s1 = new Stanza("N11");
+		assertTrue(partita(false, s1, s1, 1).isFinita());
 	}
+	@Test
+	public void testPartitaCfuFiniti() {
+		Stanza s1 = new Stanza("N11");
+		Stanza s2 = new Stanza("N12");
+		assertTrue(partita(false, s1, s2,0).isFinita());
+	}
+	
+	
 
+
+private Partita partita(boolean finita, Stanza corrente, Stanza vincente, int cfu) {
+	Partita p = new Partita();
+	p.getLabirinto().setStanzaCorrente(corrente);
+	p.getLabirinto().setStanzaVincente(vincente);
+	p.getGiocatore().setCfu(cfu);
+	if(finita) p.setFinita();
+	return p;
 }
+}
+

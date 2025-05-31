@@ -17,7 +17,8 @@ public class ComandoVaiTest {
 
     @Before
     public void setUp() {
-        this.partita = new Partita(io);
+        this.partita = new Partita();
+        this.partita.setConsole(io);
     }
 
     @Test

@@ -28,8 +28,8 @@ public class ComandoPrendiTest {
 	public void setUp() {
 		
 		this.console = new IOConsole();
-		this.partita = new Partita(this.console);
-		//this.partita.setConsole(console);
+		this.partita = new Partita();
+		this.partita.setConsole(console);
 	}
 
 	@Test

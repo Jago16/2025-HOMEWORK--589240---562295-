@@ -1,5 +1,7 @@
 package it.uniroma3.diadia.ambienti;
 
+import it.uniroma3.diadia.attrezzi.Attrezzo;
+
 public class StanzaBloccata extends Stanza{
 
 	final static String NOME_ATTREZZO_SBLOCCANTE = "chiave";
@@ -41,39 +43,13 @@ public class StanzaBloccata extends Stanza{
 		risultato.append(super.getNome());
 		risultato.append("\n-> DIREZIONE "+this.direzioneBloccata+" BLOCCATA <-");
 		risultato.append("\nUscite: ");
-		for (String direzione : super.getDirezioni())
+		for (String direzione : super.getStanzeAdiacenti().keySet())
 			if (direzione!=null)
 				risultato.append(" " + direzione);
 		risultato.append("\nAttrezzi nella stanza: ");
-		for (int i=0; i<super.getNumeroAttrezzi(); i++) {
-			risultato.append(super.getAttrezzi()[i].toString()+" ");
+		for (Attrezzo a : super.getAttrezzi()) {
+			risultato.append(a.toString()+" ");
 		}
 		return risultato.toString();
 	}
 }
-
-		/*
-	@Override
-	public String getDescrizione() {
-		return this.toString();
-	}
-
-	@Override
-	public String toString() {
-		StringBuilder risultato = new StringBuilder();
-		risultato.append(super.getNome());
-		risultato.append("\nUscite: ");
-		for (String direzione : super.getDirezioni())
-			if (direzione != null && direzione != this.direzioneBloccata)
-				risultato.append(" " + direzione);
-		risultato.append("\nAttrezzi nella stanza: ");
-		for (int i = 0; i < super.getNumeroAttrezzi(); i++) {
-			risultato.append(super.getAttrezzi()[i].toString() + " ");
-		}
-
-		return risultato.toString();
-	}
-		 */
-
-
-

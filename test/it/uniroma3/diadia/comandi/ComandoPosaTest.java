@@ -50,10 +50,4 @@ public class ComandoPosaTest {
 		assertFalse(this.partitaStanzaVuota.getStanzaCorrente().hasAttrezzo("Inesistente"));
 	}
 
-	@Test
-	public void testComandoPosa_InserimentoRifiutato() {
-		this.comandoPosa.setParametro("Rifiutato");
-		this.comandoPosa.esegui(partitaStanzaPiena);
-		assertFalse(this.partitaStanzaPiena.getStanzaCorrente().hasAttrezzo("Rifiutato"));
-	}
 }

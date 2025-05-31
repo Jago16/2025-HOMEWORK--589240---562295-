@@ -13,6 +13,12 @@ public class StanzaBloccata extends Stanza{
 		this.attrezzoCheSblocca = NOME_ATTREZZO_SBLOCCANTE;
 	}
 
+	public StanzaBloccata(String nome, String direzioneBloccata, String attrezzo) {
+		super(nome);
+		this.direzioneBloccata = direzioneBloccata;
+		this.attrezzoCheSblocca = attrezzo;
+	}	
+	
 
 	@Override
 	public Stanza getStanzaAdiacente(String direzione) {

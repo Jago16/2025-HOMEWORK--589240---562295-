@@ -1,38 +1,52 @@
 package it.uniroma3.diadia.comandi;
 
+import it.uniroma3.diadia.IO;
+import it.uniroma3.diadia.IOConsole;
 import it.uniroma3.diadia.Partita;
 import it.uniroma3.diadia.ambienti.Stanza;
 
-public class ComandoVai implements Comando{
-    private String direzione;
+public class ComandoVai implements Comando {
+	private String direzione;
+	private IO ioConsole;
 
-    public ComandoVai(String direzione) {
-        this.direzione = direzione;
-    }
-    @Override
-    public void esegui(Partita partita) {
-        Stanza stanzaCorrente = partita.getLabirinto().getStanzaCorrente();
-        Stanza prossimaStanza = null;
 
-        if (direzione == null) {
-        	partita.getConsole().mostraMessaggio("Dove vuoi andare?");
-        	partita.getConsole().mostraMessaggio("Devi specificare una direzione");
-            return;
-        }
+	/**
+	 * esecuzione del comando:
+	 * Cerca di andare in una direzione. Se c'e' una stanza ci entra
+	 * e ne stampa il nome, altrimenti stampa un messaggio di errore
+	 */
+	@Override
+	public void esegui(Partita partita) {
+		this.ioConsole = new IOConsole();
+		Stanza stanzaCorrente = partita.getStanzaCorrente();
+		Stanza prossimaStanza = null;
+		if(this.direzione==null) {
+			this.ioConsole.mostraMessaggio("Dove vuoi andare? "
+					+ "Devi specificare una direzione");
+			return;
+		}
+		prossimaStanza = stanzaCorrente.getStanzaAdiacente(this.direzione);
+		if(prossimaStanza==null) {
+			this.ioConsole.mostraMessaggio("Direzione inesistente");
+			return;
+		}
+		partita.setStanzaCorrente(prossimaStanza);
+		this.ioConsole.mostraMessaggio(partita.getStanzaCorrente().getNome());
+		partita.getGiocatore().setCfu(partita.getGiocatore().getCfu()-1);
+	}
 
-        prossimaStanza = stanzaCorrente.getStanzaAdiacente(this.direzione);
-        if (prossimaStanza == null) {
-        	partita.getConsole().mostraMessaggio("Direzione inesistente");
-            return;
-        }
+	@Override
+	public void setParametro(String parametro) {
+		this.direzione = parametro;
+	}
 
-        partita.getLabirinto().setStanzaCorrente(prossimaStanza);
-        partita.getConsole().mostraMessaggio(partita.getLabirinto().getStanzaCorrente().getNome());
-        partita.getGiocatore().setCfu(partita.getGiocatore().getCfu() - 1);
-    }
+	@Override
+	public String getNome() {
+		return "vai";
+	}
 
-    @Override
-    public void setParametro(String parametro) {
-        this.direzione = parametro;
-    }
+	@Override
+	public String getParametro() {
+		return this.direzione;
+	}
 }

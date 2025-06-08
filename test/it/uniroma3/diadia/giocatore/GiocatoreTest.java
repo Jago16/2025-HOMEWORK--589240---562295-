@@ -1,46 +1,43 @@
 package it.uniroma3.diadia.giocatore;
-
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import it.uniroma3.diadia.giocatore.Borsa;
-import it.uniroma3.diadia.giocatore.Giocatore;
+import it.uniroma3.diadia.attrezzi.Attrezzo;
 
 public class GiocatoreTest {
-	
-	Giocatore g;
-	Borsa borsa;
-	
+
+	Giocatore giocatoreBlank;
+	Giocatore giocatore;
+	Attrezzo attrezzo;
+
 	@Before
-	public void SetUp() {
-		this.g=new Giocatore();
-		this.borsa=new Borsa();
-		this.g.setBorsa(this.borsa);
+	public void setUp() {
+		this.giocatoreBlank = new Giocatore();
+		this.giocatore = new Giocatore();
+		this.attrezzo = new Attrezzo("Attrezzo", 0);
+		this.giocatore.setCfu(10);
+		this.giocatore.mettiInBorsa(attrezzo);
 	}
 
-	
 	@Test
-	public void testGetCFU() {
-		assertEquals(20,this.g.getCfu());
+	public void testCFU_GiocatoreBlank() {
+		assertEquals(20,this.giocatoreBlank.getCfu());
 	}
-	
+
 	@Test
-	public void testSetCFU() {
-		this.g.setCfu(15);
-		assertEquals(15,this.g.getCfu());
+	public void testCFU_Giocatore() {
+		assertEquals(10,this.giocatore.getCfu());	
 	}
-	
+
 	@Test
-	public void testGetBorsa() {
-		assertEquals(borsa,this.g.getBorsa());
+	public void testMettiInBorsa_Presente() {
+		assertTrue(this.giocatore.getBorsa().hasAttrezzo("Attrezzo"));
 	}
-	
+
 	@Test
-	public void testSetBorsa() {
-		Borsa b=new Borsa();
-		this.g.setBorsa(b);
-		assertEquals(b,this.g.getBorsa());
+	public void testMettiInBorsa_Assente() {
+		assertFalse(this.giocatore.getBorsa().hasAttrezzo("Inesistente"));
 	}
 }

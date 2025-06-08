@@ -1,47 +1,46 @@
 package it.uniroma3.diadia.comandi;
 
+import it.uniroma3.diadia.IO;
+import it.uniroma3.diadia.IOConsole;
 import it.uniroma3.diadia.Partita;
 import it.uniroma3.diadia.attrezzi.Attrezzo;
 
-public class ComandoPosa implements Comando{
-	
-	private String nomeAttrezzo;
-	
-	public ComandoPosa(String attrezzo) {
-		this.nomeAttrezzo = attrezzo;
-	}
-	
-	public ComandoPosa() {
-		this.nomeAttrezzo = null;
-	}
-	
-	@Override
-	public void setParametro(String parametro) {
-		this.nomeAttrezzo = parametro;
-	}
-	
+public class ComandoPosa implements Comando {
+	private String parametro;
+	private IO ioConsole;
+
+	/**
+	 * Metodo che rimuove un attrezzo dalla borsa e lo posa nella stanza
+	 * @param partita sulla quale fare le modifiche
+	 */
 	@Override
 	public void esegui(Partita partita) {
-		
-		boolean trovato = false;
-		// attrezzi posati vengono rimossi dalla borsa e aggiunti nella stanza corrente
-		if (partita.getGiocatore().getBorsa().hasAttrezzo(nomeAttrezzo)) {
-			trovato = true;
-			Attrezzo daPosare = partita.getGiocatore().getBorsa().getAttrezzo(nomeAttrezzo);
-			partita.getLabirinto().getStanzaCorrente().addAttrezzo(daPosare);
-			partita.getGiocatore().getBorsa().removeAttrezzo(nomeAttrezzo);
+		this.ioConsole = new IOConsole();
+		if(!partita.getGiocatore().getBorsa().hasAttrezzo(this.parametro)) {
+			this.ioConsole.mostraMessaggio("Attrezzo inesitente");
+			return;
 		}
-		if (!trovato) {
-			partita.getConsole().mostraMessaggio("attrezzo non trovato");
-		} else {
-			partita.getConsole().mostraMessaggio("attrezzo " + nomeAttrezzo + " e' stato posato");
-		}
-		
+
+		Attrezzo attrezzo;
+		attrezzo=partita.getGiocatore().getBorsa().getAttrezzo(this.parametro);
+		partita.getStanzaCorrente().addAttrezzo(attrezzo); 			//Controllo che posso aggiungere l'attrezzo
+		partita.getGiocatore().getBorsa().removeAttrezzo(this.parametro);
+		ioConsole.mostraMessaggio("Hai posato l'attrezzo");
 	}
 
+	@Override
+	public void setParametro(String parametro) {
+		this.parametro = parametro;
+	}
 
+	@Override
+	public String getNome() {
+		return "posa";
+	}
 
-	
-	
-	
+	@Override
+	public String getParametro() {
+		return this.parametro;
+	}
+
 }

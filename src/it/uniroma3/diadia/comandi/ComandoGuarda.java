@@ -1,28 +1,31 @@
 package it.uniroma3.diadia.comandi;
+
+import it.uniroma3.diadia.IO;
+import it.uniroma3.diadia.IOConsole;
 import it.uniroma3.diadia.Partita;
 
-public class ComandoGuarda implements Comando{
-
+public class ComandoGuarda implements Comando {
+	private IO ioConsole;
+	@Override
+	public void esegui(Partita partita) {
+		this.ioConsole = new IOConsole();
+		ioConsole.mostraMessaggio("Informazioni sulla stanza: " + partita.getStanzaCorrente());
+		ioConsole.mostraMessaggio("Informazioni sul giocatore: " + partita.getGiocatore().getCfu()+" CFU");
+		ioConsole.mostraMessaggio("Informazioni sulla borsa del giocatore:\n" + partita.getGiocatore().getBorsa());
+	}
 
 	@Override
 	public void setParametro(String parametro) {
-		return;
-	}
-	
-	@Override
-	public void esegui(Partita partita) {
-		partita.getConsole().mostraMessaggio(partita.getLabirinto().getStanzaCorrente().getDescrizione());
-		partita.getConsole().mostraMessaggio(partita.getGiocatore().getBorsa().toString());
-		partita.getConsole().mostraMessaggio("CFU rimasti:  " + partita.getGiocatore().getCfu());
 	}
 
-	/*
 	@Override
-	public void esegui(Partita partita) {
-		partita.getConsole().mostraMessaggio(partita.getLabirinto().getStanzaCorrente() + "hai ");
-		partita.getConsole().mostraMessaggio(partita.getGiocatore().getCfu() + " cfu rimanenti ");
+	public String getNome() {
+		return "guarda";
 	}
-	 */
 
+	@Override
+	public String getParametro() {
+		return null;
+	}
 
 }

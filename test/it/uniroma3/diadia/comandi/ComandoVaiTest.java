@@ -4,52 +4,51 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
-import it.uniroma3.diadia.IO;
-import it.uniroma3.diadia.IOConsole;
+
 import it.uniroma3.diadia.Partita;
-import it.uniroma3.diadia.ambienti.Stanza;
+import it.uniroma3.diadia.ambienti.Labirinto;
+import it.uniroma3.diadia.ambienti.LabirintoBuilder;
 
 
 public class ComandoVaiTest {
 
-    private Partita partita;
-    private IO io = new IOConsole();
+	private Partita partita;
+	private Labirinto monolocale;
+	private Labirinto bilocale;
+	private ComandoVai comandoVai;
 
-    @Before
-    public void setUp() {
-        this.partita = new Partita();
-        this.partita.setConsole(io);
-    }
+	@Before
+	public void setUp() {
+		this.monolocale = new LabirintoBuilder()
+				.addStanzaIniziale("Inizio")
+				.addStanzaVincente("Fine")
+				.getLabirinto();
 
-    @Test
-    public void eseguiTestConDirezioneNulla() {
-        String direzione = null;
-        Comando comando = new ComandoVai(direzione);
-        comando.esegui(this.partita);
+		this.bilocale = new LabirintoBuilder()
+				.addStanzaIniziale("Inizio")
+				.addStanzaVincente("Fine")
+				.addAdiacenza("Inizio","Fine","Nord")
+				.getLabirinto();
 
-        assertEquals(this.partita.getLabirinto().getStanzaCorrente(),this.partita.getLabirinto().getStanzaCorrente());
+		this.comandoVai = new ComandoVai();
+	}
 
-    }
+	@Test
+	public void testComandoVai_DirezioneEsistente() {
+		this.partita = new Partita(this.bilocale);
+		this.comandoVai.setParametro("Nord");
+		this.comandoVai.esegui(partita);
+		assertEquals(this.partita.getStanzaCorrente().getNome(),"Fine");
+		assertEquals(this.partita.getGiocatore().getCfu(),19);
+	}
 
-    @Test
-    public void eseguiTestConDirezioneNonValida() {
-        String direzione="nord-ovest";
-        Comando comando=new ComandoVai(direzione);
-        comando.esegui(this.partita);
-
-        assertEquals(this.partita.getLabirinto().getStanzaCorrente(),this.partita.getLabirinto().getStanzaCorrente());
-    }
-
-    @Test
-    public void eseguiTestConDirezioneCorretta() {
-        String direzione="nord";
-        Stanza stanza=new Stanza("stanza_test");
-        this.partita.getLabirinto().getStanzaCorrente().impostaStanzaAdiacente(direzione, stanza);
-        Comando comando=new ComandoVai(direzione);
-        comando.esegui(this.partita);
-
-        assertEquals(stanza,this.partita.getLabirinto().getStanzaCorrente());
-    }
+	@Test
+	public void testComandoVai_DirezioneInesistente() {
+		this.partita = new Partita(this.monolocale);
+		this.comandoVai.setParametro("Sud");
+		this.comandoVai.esegui(partita);
+		this.comandoVai.esegui(partita);	//Dato che la direzione è inesistente resto nella stanza corrente
+		assertEquals(this.partita.getStanzaCorrente().getNome(),"Inizio");
+		assertEquals(this.partita.getGiocatore().getCfu(),20);
+	}
 }
-
-

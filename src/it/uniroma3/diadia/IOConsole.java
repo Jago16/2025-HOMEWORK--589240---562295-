@@ -11,7 +11,6 @@ public class IOConsole implements IO {
 		@SuppressWarnings("resource")
 		Scanner scannerDiLinee = new Scanner(System.in);
 		String riga = scannerDiLinee.nextLine();
-		// scannerDiLinee.close();
 		return riga;
 	}
 }

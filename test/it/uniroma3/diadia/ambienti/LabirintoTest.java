@@ -1,39 +1,44 @@
 package it.uniroma3.diadia.ambienti;
+import static org.junit.Assert.*;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.Before;
+import org.junit.Test;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import it.uniroma3.diadia.ambienti.Labirinto;
-import it.uniroma3.diadia.ambienti.Stanza;
-
-class LabirintoTest {
-
+public class LabirintoTest {
 	private Labirinto labirinto;
-	
-	@BeforeEach
-	public void setUp() throws Exception {
-		this.labirinto = new Labirinto();
+	private Stanza stanzaVincente;
+	private Stanza stanzaIniziale;
+
+	@Before
+	public void setUp() {
+		this.labirinto = new LabirintoBuilder()
+				.addStanzaIniziale("Inizio")
+				.addStanzaVincente("Fine")
+				.addAdiacenza("Inizio","Fine","Nord")
+				.getLabirinto();
+
+		this.stanzaIniziale = new Stanza("Inizio");
+		this.stanzaVincente = new Stanza("Fine");
+
 	}
 
 	@Test
-	void testCreaLabirinto() {
-		assertNotNull(new Labirinto());
+	public void testGetStanzaVincente_Vincente() {
+		assertTrue(this.labirinto.getStanzaVincente().getNome().equals(this.stanzaVincente.getNome()));
 	}
 
 	@Test
-	void testSetStanzaIniziale() {
-		Stanza stanzaIniziale = new Stanza("stanza di test");
-		this.labirinto.setStanzaCorrente(stanzaIniziale);
-		assertEquals(stanzaIniziale, labirinto.getStanzaCorrente());
+	public void testGetStanzaVincente_Perdente() {
+		assertFalse(this.labirinto.getStanzaVincente().getNome().equals(this.stanzaIniziale.getNome()));
 	}
 
 	@Test
-	void testStanzaVincente() {
-		Stanza vincente = new Stanza("questa vince");
-		this.labirinto.setStanzaVincente(vincente);
-		assertEquals(vincente, this.labirinto.getStanzaVincente());
+	public void testGetStanzaIniziale_TRUE() {
+		assertTrue(this.labirinto.getStanzaIniziale().getNome().equals(this.stanzaIniziale.getNome()));
 	}
 
+	@Test
+	public void testGetStanzaIniziale_FALSE() {
+		assertFalse(this.labirinto.getStanzaIniziale().getNome().equals(this.stanzaVincente.getNome()));
+	}
 }

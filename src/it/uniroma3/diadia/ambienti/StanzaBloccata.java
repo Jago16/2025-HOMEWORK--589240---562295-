@@ -2,54 +2,44 @@ package it.uniroma3.diadia.ambienti;
 
 import it.uniroma3.diadia.attrezzi.Attrezzo;
 
+/**
+ * Classe StanzaBloccata - una stanza da cui non si può uscire senza un determinato attrezzo
+ * che sblocca la stanza
+ * @see Stanza
+ * @see Attrezzo
+ * @version 1.0
+ */
 public class StanzaBloccata extends Stanza{
 
-	final static String NOME_ATTREZZO_SBLOCCANTE = "chiave";
+	private String direzioneBloccata;
+	private String sbloccaStanza;
 
-	String direzioneBloccata;
-	String attrezzoCheSblocca;
-
-	public StanzaBloccata(String nome, String direzioneBloccata) {
+	public StanzaBloccata(String nome,String direzioneBloccata,String sbloccaStanza) {
 		super(nome);
 		this.direzioneBloccata = direzioneBloccata;
-		this.attrezzoCheSblocca = NOME_ATTREZZO_SBLOCCANTE;
+		this.sbloccaStanza = sbloccaStanza;
 	}
 
-	public StanzaBloccata(String nome, String direzioneBloccata, String attrezzo) {
-		super(nome);
-		this.direzioneBloccata = direzioneBloccata;
-		this.attrezzoCheSblocca = attrezzo;
-	}	
-	
-
 	@Override
-	public Stanza getStanzaAdiacente(String direzione) {
-		Stanza stanza = null;
-		if(this.direzioneBloccata.equals(direzione) && !this.hasAttrezzo(this.attrezzoCheSblocca)) {
-			stanza = this;
+	public Stanza getStanzaAdiacente(String dir) {
+		if(dir == this.direzioneBloccata) {
+			if(this.hasAttrezzo(this.sbloccaStanza))
+				super.getStanzaAdiacente(dir);
+			else
+				return this;
 		}
-		else {
-			stanza = super.getStanzaAdiacente(direzione);
-		}
-		return stanza;
+		return super.getStanzaAdiacente(dir);
 	}
 
 	@Override
 	public String getDescrizione() {
-		if(super.hasAttrezzo(attrezzoCheSblocca)) {
-			return super.getDescrizione();
-		}
-		StringBuilder risultato = new StringBuilder();
-		risultato.append(super.getNome());
-		risultato.append("\n-> DIREZIONE "+this.direzioneBloccata+" BLOCCATA <-");
-		risultato.append("\nUscite: ");
-		for (String direzione : super.getStanzeAdiacenti().keySet())
-			if (direzione!=null)
-				risultato.append(" " + direzione);
-		risultato.append("\nAttrezzi nella stanza: ");
-		for (Attrezzo a : super.getAttrezzi()) {
-			risultato.append(a.toString()+" ");
-		}
-		return risultato.toString();
+		if(!this.hasAttrezzo(this.sbloccaStanza)) 
+			return "Direzione" +this.direzioneBloccata+" bloccata"+
+			"hai bisogno di "+this.sbloccaStanza+" per sbloccarla"+
+			"Informazioni sulla stanza"+
+			super.toString();
+
+		return super.toString();
 	}
 }
+

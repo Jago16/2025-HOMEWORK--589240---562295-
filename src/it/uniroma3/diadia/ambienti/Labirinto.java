@@ -1,33 +1,40 @@
 package it.uniroma3.diadia.ambienti;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import it.uniroma3.diadia.attrezzi.Attrezzo;
 
-public class Labirinto {
 
-	private Stanza stanzaCorrente;
+public class Labirinto {
 	private Stanza stanzaVincente;
+	private Stanza stanzaIniziale;
+	private Stanza ultimaAggiunta;
+	private Map<String,Stanza> stanze;
+
 
 	public Labirinto() {
-		this.creaLabirinto();
+		this.stanze = new HashMap<String, Stanza>();
+	}
+	
+	public Labirinto(String test) {		//Costruttore usato unicamente nei test vecchi
+		creaStanze();
 	}
 
-	/**
-	 * Crea il labirinto con tutte le stanze e le porte di collegamento
-	 */
-	private void creaLabirinto() {
+	private void creaStanze() {
 
-		/* crea gli attrezzi */
-		Attrezzo lanterna = new Attrezzo("lanterna", 3);
-		Attrezzo osso = new Attrezzo("osso", 1);
+		// crea gli attrezzi 
+		Attrezzo lanterna = new Attrezzo("lanterna",3);
+		Attrezzo osso = new Attrezzo("osso",1);
 
-		/* crea stanze del labirinto */
+		// crea stanze del labirinto 
 		Stanza atrio = new Stanza("Atrio");
 		Stanza aulaN11 = new Stanza("Aula N11");
 		Stanza aulaN10 = new Stanza("Aula N10");
 		Stanza laboratorio = new Stanza("Laboratorio Campus");
 		Stanza biblioteca = new Stanza("Biblioteca");
 
-		/* collega le stanze */
+		// collega le stanze 
 		atrio.impostaStanzaAdiacente("nord", biblioteca);
 		atrio.impostaStanzaAdiacente("est", aulaN11);
 		atrio.impostaStanzaAdiacente("sud", aulaN10);
@@ -41,29 +48,42 @@ public class Labirinto {
 		laboratorio.impostaStanzaAdiacente("ovest", aulaN11);
 		biblioteca.impostaStanzaAdiacente("sud", atrio);
 
-		/* pone gli attrezzi nelle stanze */
+		// pone gli attrezzi nelle stanze 
 		aulaN10.addAttrezzo(lanterna);
 		atrio.addAttrezzo(osso);
 
 		// il gioco comincia nell'atrio
-		this.setStanzaCorrente(atrio);
-		this.setStanzaVincente(biblioteca);
+		this.stanzaIniziale = atrio;  
+		this.stanzaVincente = biblioteca;
 	}
+
+
 
 	public Stanza getStanzaVincente() {
-		return stanzaVincente;
+		return this.stanzaVincente;
 	}
 
-	public void setStanzaVincente(Stanza vincente) {
-		this.stanzaVincente = vincente;
+	public Stanza getStanzaIniziale() {
+		return this.stanzaIniziale;
 	}
 
-	public Stanza getStanzaCorrente() {
-		return this.stanzaCorrente;
+	public void setStanzaIniziale(Stanza stanza) {
+		this.stanzaIniziale = stanza;
 	}
 
-	public void setStanzaCorrente(Stanza stanzaCorrente) {
-		this.stanzaCorrente = stanzaCorrente;
+	public void setStanzaVincente(Stanza stanza) {
+		this.stanzaVincente = stanza;
 	}
 
+	public Stanza getUltimaAggiunta() {
+		return this.ultimaAggiunta;
+	}
+
+	public void setUltimaAggiunta(Stanza ultimaAggiunta) {
+		this.ultimaAggiunta = ultimaAggiunta;
+	}
+
+	public Map<String,Stanza> getStanze() {
+		return this.stanze;
+	}
 }
